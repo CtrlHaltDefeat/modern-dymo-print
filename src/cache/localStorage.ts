@@ -1,4 +1,7 @@
-import { LOCAL_STORAGE_NOT_AVAILABLE_ERROR, LOCAL_STORAGE_SAVE_ERROR } from "@/cache/constants.ts";
+import {
+	LOCAL_STORAGE_NOT_AVAILABLE_ERROR,
+	LOCAL_STORAGE_SAVE_ERROR,
+} from "@/cache/constants.ts";
 import logMessage, { LogLevel } from "@/logging/logMessage.ts";
 
 const checkIsLocalStorageAvailable = (): void => {
@@ -9,7 +12,11 @@ const checkIsLocalStorageAvailable = (): void => {
 		storageValue = globalThis.localStorage.getItem("test");
 		globalThis.localStorage.removeItem("test");
 	} catch (error) {
-		logMessage(LOCAL_STORAGE_NOT_AVAILABLE_ERROR, error instanceof Error ? error : "", LogLevel.ERROR);
+		logMessage(
+			LOCAL_STORAGE_NOT_AVAILABLE_ERROR,
+			error instanceof Error ? error : "",
+			LogLevel.ERROR,
+		);
 		throw new Error(LOCAL_STORAGE_NOT_AVAILABLE_ERROR);
 	}
 	if (storageValue !== "test") {
@@ -29,7 +36,9 @@ export function removeLocalStorage(key: string): void {
 	localStorage.removeItem(key);
 }
 
-export function getFromLocalStorage<T extends Record<string, unknown>>(key: string): T | undefined {
+export function getFromLocalStorage<T extends Record<string, unknown>>(
+	key: string,
+): T | undefined {
 	checkIsLocalStorageAvailable();
 
 	const value = localStorage.getItem(key);

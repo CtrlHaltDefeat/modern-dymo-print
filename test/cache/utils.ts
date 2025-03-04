@@ -1,6 +1,9 @@
 import { DymoPrintService } from "@/index.ts";
 
-export const serviceSettings = { serviceHost: DymoPrintService.HOST, servicePort: DymoPrintService.START_PORT };
+export const serviceSettings = {
+	serviceHost: DymoPrintService.HOST,
+	servicePort: DymoPrintService.START_PORT,
+};
 
 export function unsetLocalStorage(): Storage {
 	const originalLocalStorage = globalThis.localStorage;

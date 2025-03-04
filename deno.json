@@ -20,7 +20,14 @@
 	},
 	"compilerOptions": {
 		"lib": [
-			"dom", "dom.iterable", "esnext", "deno.ns"
+			"dom",
+			"dom.iterable",
+			"esnext",
+			"deno.ns"
 		]
+	},
+	"fmt": {
+		"useTabs": true,
+		"exclude": ["dymo.connect.framework.js"]
 	}
 }

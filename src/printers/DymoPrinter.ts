@@ -18,8 +18,10 @@ export default abstract class DymoPrinter {
 
 		this.name = name.textContent;
 
-		this.modelName = element.querySelector("ModelName")?.textContent ?? undefined;
-		this.isConnected = element.querySelector("IsConnected")?.textContent === "True";
+		this.modelName = element.querySelector("ModelName")?.textContent ??
+			undefined;
+		this.isConnected =
+			element.querySelector("IsConnected")?.textContent === "True";
 		this.isLocal = element.querySelector("IsLocal")?.textContent === "True";
 	}
 }

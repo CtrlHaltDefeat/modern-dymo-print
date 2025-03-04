@@ -10,7 +10,10 @@ function clearStorage() {
 
 Deno.test("getCachedService - returns null when no service is cached", () => {
 	clearStorage();
-	assertEquals(getCachedService(), { serviceHost: undefined, servicePort: undefined });
+	assertEquals(getCachedService(), {
+		serviceHost: undefined,
+		servicePort: undefined,
+	});
 });
 
 Deno.test("getCachedService - returns service from localStorage when available", () => {

@@ -1,6 +1,9 @@
 import logMessage, { LogLevel } from "@/logging/logMessage.ts";
 import DymoPrintService from "@/printService/DymoPrintService.ts";
-import { COMMAND_ERROR, MISSING_CONTENT_TYPE_ERROR } from "@/webService/constants.ts";
+import {
+	COMMAND_ERROR,
+	MISSING_CONTENT_TYPE_ERROR,
+} from "@/webService/constants.ts";
 
 export enum HttpMethod {
 	GET = "GET",
@@ -12,14 +15,16 @@ export default async function invokeCommand(
 	servicePort: number,
 	endpoint: string,
 	method = HttpMethod.GET,
-	formData?: Record<string, string>
+	formData?: Record<string, string>,
 ): Promise<unknown> {
-	const url = `${DymoPrintService.PROTOCOL}${serviceHost}:${servicePort}/${DymoPrintService.SERVICE_PATH}/${endpoint}`;
+	const url =
+		`${DymoPrintService.PROTOCOL}${serviceHost}:${servicePort}/${DymoPrintService.SERVICE_PATH}/${endpoint}`;
 
-	if (formData)
+	if (formData) {
 		Object.keys(formData || {}).forEach((key) => {
 			formData[key] = formData[key] ?? "";
 		});
+	}
 
 	const body = formData ? new URLSearchParams(formData) : undefined;
 
@@ -41,7 +46,11 @@ export default async function invokeCommand(
 
 		return await response.text();
 	} catch (error) {
-		logMessage(`${COMMAND_ERROR}: ${endpoint}`, error instanceof Error ? error : undefined, LogLevel.ERROR);
+		logMessage(
+			`${COMMAND_ERROR}: ${endpoint}`,
+			error instanceof Error ? error : undefined,
+			LogLevel.ERROR,
+		);
 
 		const errorMessage = error instanceof Error ? error.message : error;
 		throw new Error(`${COMMAND_ERROR}: ${endpoint}. Error: ${errorMessage}`);
