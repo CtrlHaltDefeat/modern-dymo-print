@@ -10,7 +10,7 @@ name: Deno
 
 on:
   push:
-    branches: ["main", "test_workflow"]
+    branches: ["main"]
   pull_request:
     branches: ["main"]
 
