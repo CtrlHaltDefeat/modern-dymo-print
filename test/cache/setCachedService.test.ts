@@ -14,7 +14,10 @@ Deno.test("setCachedService - localStorage operations", () => {
 
 	// Set service
 	setCachedService(serviceSettings.serviceHost, serviceSettings.servicePort);
-	assertEquals(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!), serviceSettings);
+	assertEquals(
+		JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!),
+		serviceSettings,
+	);
 
 	// Remove service
 	setCachedService();
@@ -55,7 +58,11 @@ Deno.test("setCachedService - throws when no storage available", async () => {
 		},
 	});
 
-	assertThrows(() => setCachedService(), Error, "Neither localStorage nor cookies are available.");
+	assertThrows(
+		() => setCachedService(),
+		Error,
+		"Neither localStorage nor cookies are available.",
+	);
 
 	await GlobalRegistrator.unregister();
 	globalThis.localStorage = originalLocalStorage;

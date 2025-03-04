@@ -55,7 +55,11 @@ export default class DymoPrintService {
 	 */
 	private checkPrinterConnection(printer: DymoPrinter): void {
 		if (!printer.isConnected) {
-			logMessage(`Printer: ${printer.name} is not connected`, undefined, LogLevel.ERROR);
+			logMessage(
+				`Printer: ${printer.name} is not connected`,
+				undefined,
+				LogLevel.ERROR,
+			);
 			throw new Error(PRINTER_NOT_CONNECTED_ERROR);
 		}
 	}
@@ -73,9 +77,13 @@ export default class DymoPrintService {
 			printerDoc.children.length !== 1 ||
 			printerDoc.children[0].tagName !== "Printers" ||
 			// cSpell:disable-next-line
-			[...printerDoc.children[0].children].some((element) => element.tagName === "parsererror" || element.tagName === "PARSERERROR")
+			[...printerDoc.children[0].children].some((element) =>
+				element.tagName === "parsererror" || element.tagName === "PARSERERROR"
+			)
 		) {
-			let logTitle = !printerDoc ? PARSE_PRINTERS_ERROR : "Unexpected number of children in printers XML";
+			let logTitle = !printerDoc
+				? PARSE_PRINTERS_ERROR
+				: "Unexpected number of children in printers XML";
 			logTitle += `\n${printersXml}`;
 			logMessage(logTitle, undefined, LogLevel.ERROR);
 			throw new Error(PARSE_PRINTERS_ERROR);
@@ -101,7 +109,9 @@ export default class DymoPrintService {
 	}
 
 	private getLabelString(label: string | DymoLabel): string {
-		return typeof label === "string" ? DymoLabel.fromString(label).toString() : label.toString();
+		return typeof label === "string"
+			? DymoLabel.fromString(label).toString()
+			: label.toString();
 	}
 
 	/**
@@ -112,14 +122,18 @@ export default class DymoPrintService {
 	 * @throws {Error} - If no web service is found
 	 * @returns {Promise<DymoPrintService>} A promise that resolves to a new instance of DymoPrintService
 	 */
-	public static async initDymoPrintService(isLoggingEnabled?: boolean): Promise<DymoPrintService> {
+	public static async initDymoPrintService(
+		isLoggingEnabled?: boolean,
+	): Promise<DymoPrintService> {
 		if (isLoggingEnabled) setLoggingState(isLoggingEnabled);
 
 		let serviceHost: string | undefined = undefined;
 		let servicePort: number | undefined = undefined;
 
 		if (await isCachedWebServiceRunning()) {
-			({ serviceHost, servicePort } = getCachedService() as Required<WebServiceSettings>);
+			({ serviceHost, servicePort } = getCachedService() as Required<
+				WebServiceSettings
+			>);
 		} else {
 			({ serviceHost, servicePort } = await findWebService());
 		}
@@ -134,10 +148,18 @@ export default class DymoPrintService {
 	 * @returns {Promise<DymoPrinter[]>} A promise that resolves to a list of DymoPrinters
 	 */
 	public async getPrinters(): Promise<DymoPrinter[]> {
-		const printersXml = await invokeCommand(this.webServiceHost, this.webServicePort, DymoPrintService.COMMANDS.GET_PRINTERS);
+		const printersXml = await invokeCommand(
+			this.webServiceHost,
+			this.webServicePort,
+			DymoPrintService.COMMANDS.GET_PRINTERS,
+		);
 
 		if (typeof printersXml !== "string") {
-			logMessage("Failed to get printers XML. Return type was not a string", undefined, LogLevel.ERROR);
+			logMessage(
+				"Failed to get printers XML. Return type was not a string",
+				undefined,
+				LogLevel.ERROR,
+			);
 			throw new Error("Failed to get printers XML");
 		}
 
@@ -153,16 +175,27 @@ export default class DymoPrintService {
 	 * @throws {Error} If the printer is not connected
 	 * @throws {Error} If there was an error printing the label
 	 */
-	public async printLabel(printer: DymoPrinter, label: DymoLabel | string, printParamsXml?: string, labelSetXml?: string): Promise<void> {
+	public async printLabel(
+		printer: DymoPrinter,
+		label: DymoLabel | string,
+		printParamsXml?: string,
+		labelSetXml?: string,
+	): Promise<void> {
 		this.checkPrinterConnection(printer);
 
 		try {
-			const response = await invokeCommand(this.webServiceHost, this.webServicePort, DymoPrintService.COMMANDS.PRINT_LABEL, HttpMethod.POST, {
-				printerName: printer.name,
-				labelXml: this.getLabelString(label),
-				printParamsXml: printParamsXml ?? "",
-				labelSetXml: labelSetXml ?? "",
-			});
+			const response = await invokeCommand(
+				this.webServiceHost,
+				this.webServicePort,
+				DymoPrintService.COMMANDS.PRINT_LABEL,
+				HttpMethod.POST,
+				{
+					printerName: printer.name,
+					labelXml: this.getLabelString(label),
+					printParamsXml: printParamsXml ?? "",
+					labelSetXml: labelSetXml ?? "",
+				},
+			);
 
 			if (response === true) return;
 
@@ -181,12 +214,21 @@ export default class DymoPrintService {
 	 * @throws {Error} If there was an error rendering the label
 	 * @returns {Promise<string>} A promise that resolves to the base64 encoded label
 	 */
-	public async renderLabel(label: DymoLabel | string, renderParamsXml?: string): Promise<string> {
+	public async renderLabel(
+		label: DymoLabel | string,
+		renderParamsXml?: string,
+	): Promise<string> {
 		try {
-			const labelBase64 = await invokeCommand(this.webServiceHost, this.webServicePort, DymoPrintService.COMMANDS.RENDER_LABEL, HttpMethod.POST, {
-				labelXml: this.getLabelString(label),
-				renderParamsXml: renderParamsXml ?? "",
-			});
+			const labelBase64 = await invokeCommand(
+				this.webServiceHost,
+				this.webServicePort,
+				DymoPrintService.COMMANDS.RENDER_LABEL,
+				HttpMethod.POST,
+				{
+					labelXml: this.getLabelString(label),
+					renderParamsXml: renderParamsXml ?? "",
+				},
+			);
 
 			if (typeof labelBase64 !== "string") {
 				throw new Error(FAILED_TO_RENDER_LABEL_ERROR);
@@ -194,7 +236,11 @@ export default class DymoPrintService {
 
 			return labelBase64;
 		} catch {
-			logMessage("Failed to render label. Return type was not a string", undefined, LogLevel.ERROR);
+			logMessage(
+				"Failed to render label. Return type was not a string",
+				undefined,
+				LogLevel.ERROR,
+			);
 			throw new Error(FAILED_TO_RENDER_LABEL_ERROR);
 		}
 	}

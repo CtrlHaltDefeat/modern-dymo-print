@@ -11,8 +11,14 @@ Deno.test("localStorage - throws when not available", () => {
 	clearStorage();
 	const originalLocalStorage = unsetLocalStorage();
 
-	assertThrows(() => setLocalStorage("key", "value"), LOCAL_STORAGE_NOT_AVAILABLE_ERROR);
-	assertThrows(() => getFromLocalStorage("key"), LOCAL_STORAGE_NOT_AVAILABLE_ERROR);
+	assertThrows(
+		() => setLocalStorage("key", "value"),
+		LOCAL_STORAGE_NOT_AVAILABLE_ERROR,
+	);
+	assertThrows(
+		() => getFromLocalStorage("key"),
+		LOCAL_STORAGE_NOT_AVAILABLE_ERROR,
+	);
 
 	globalThis.localStorage = originalLocalStorage;
 });

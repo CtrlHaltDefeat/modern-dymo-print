@@ -10,7 +10,10 @@ export default async function isCachedWebServiceRunning(): Promise<boolean> {
 			await pingEndpoint(serviceHost, servicePort);
 			return true;
 		} catch (error) {
-			logMessage("Cached web service is not running", error instanceof Error ? error : undefined);
+			logMessage(
+				"Cached web service is not running",
+				error instanceof Error ? error : undefined,
+			);
 		}
 	}
 

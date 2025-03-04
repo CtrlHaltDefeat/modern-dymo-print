@@ -15,7 +15,10 @@ Deno.test({
 		});
 
 		try {
-			assertEquals(await pingEndpoint(serviceHost, servicePort), { serviceHost, servicePort });
+			assertEquals(await pingEndpoint(serviceHost, servicePort), {
+				serviceHost,
+				servicePort,
+			});
 		} finally {
 			await server.shutdown();
 		}
@@ -23,5 +26,8 @@ Deno.test({
 });
 
 Deno.test("should throw an error on failed ping", async () => {
-	await assertRejects(() => pingEndpoint(DymoPrintService.HOST, DymoPrintService.START_PORT), Error);
+	await assertRejects(
+		() => pingEndpoint(DymoPrintService.HOST, DymoPrintService.START_PORT),
+		Error,
+	);
 });

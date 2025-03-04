@@ -7,6 +7,7 @@ export default class DZPrinter extends DymoPrinter {
 	constructor(element: Element) {
 		super(element);
 
-		this.isAutoCutSupported = element.querySelector("IsAutoCutSupported")?.textContent === "True";
+		this.isAutoCutSupported =
+			element.querySelector("IsAutoCutSupported")?.textContent === "True";
 	}
 }

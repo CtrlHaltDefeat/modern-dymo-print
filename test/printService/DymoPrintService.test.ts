@@ -10,7 +10,13 @@ import {
 } from "@/printService/constants.ts";
 import DymoPrintService from "@/printService/DymoPrintService.ts";
 import { NO_WEB_SERVICE_FOUND_ERROR } from "@/webService/constants.ts";
-import { assert, assertEquals, assertInstanceOf, assertRejects, assertThrows } from "jsr:@std/assert";
+import {
+	assert,
+	assertEquals,
+	assertInstanceOf,
+	assertRejects,
+	assertThrows,
+} from "jsr:@std/assert";
 import { Window } from "npm:happy-dom";
 import { testLabel, testLabelBase64, testPrintersXml } from "../testData.ts";
 import { getLabelWriter, startHttpServer } from "../utils.ts";
@@ -21,7 +27,8 @@ let window: Window;
 function setupTest() {
 	window = new Window();
 	globalThis.DOMParser = window.DOMParser as unknown as typeof DOMParser;
-	globalThis.XMLSerializer = window.XMLSerializer as unknown as typeof XMLSerializer;
+	globalThis.XMLSerializer = window
+		.XMLSerializer as unknown as typeof XMLSerializer;
 
 	setCachedService(DymoPrintService.HOST, DymoPrintService.START_PORT);
 }
@@ -35,7 +42,11 @@ async function tearDownTest(server?: Deno.HttpServer) {
 Deno.test("initDymoPrintService - should throw when no web service running", async () => {
 	setupTest();
 	try {
-		await assertRejects(() => DymoPrintService.initDymoPrintService(), Error, NO_WEB_SERVICE_FOUND_ERROR);
+		await assertRejects(
+			() => DymoPrintService.initDymoPrintService(),
+			Error,
+			NO_WEB_SERVICE_FOUND_ERROR,
+		);
 	} finally {
 		await tearDownTest();
 	}
@@ -68,8 +79,17 @@ Deno.test({
 		try {
 			const printService = await getPrintService(true);
 
-			assertThrows(() => printService["parsePrintersXml"](""), Error, PARSE_PRINTERS_ERROR);
-			assertThrows(() => printService["parsePrintersXml"]("<Printers><LabelWriterPrinter>"), Error, PARSE_PRINTERS_ERROR);
+			assertThrows(
+				() => printService["parsePrintersXml"](""),
+				Error,
+				PARSE_PRINTERS_ERROR,
+			);
+			assertThrows(
+				() =>
+					printService["parsePrintersXml"]("<Printers><LabelWriterPrinter>"),
+				Error,
+				PARSE_PRINTERS_ERROR,
+			);
 		} finally {
 			await tearDownTest();
 		}
@@ -116,7 +136,8 @@ Deno.test({
 });
 
 Deno.test({
-	name: "getPrinters - should return an empty list when no printers are available",
+	name:
+		"getPrinters - should return an empty list when no printers are available",
 	sanitizeResources: false,
 	sanitizeOps: false,
 	fn: async () => {
@@ -180,7 +201,11 @@ Deno.test({
 			const printer = getLabelWriter(false);
 			const printService = await getPrintService(true);
 
-			await assertRejects(() => printService.printLabel(printer, ""), Error, PRINTER_NOT_CONNECTED_ERROR);
+			await assertRejects(
+				() => printService.printLabel(printer, ""),
+				Error,
+				PRINTER_NOT_CONNECTED_ERROR,
+			);
 		} finally {
 			await tearDownTest();
 		}
@@ -197,7 +222,11 @@ Deno.test({
 			const printer = getLabelWriter(true);
 			const printService = await getPrintService(true);
 
-			await assertRejects(() => printService.printLabel(printer, ""), Error, FAILED_TO_PRINT_LABEL_ERROR);
+			await assertRejects(
+				() => printService.printLabel(printer, ""),
+				Error,
+				FAILED_TO_PRINT_LABEL_ERROR,
+			);
 		} finally {
 			await tearDownTest();
 		}
@@ -217,17 +246,29 @@ Deno.test({
 			const printer = getLabelWriter(true);
 			[printService, server] = await getPrintService(false);
 
-			await assertRejects(() => printService.printLabel(printer, ""), Error, FAILED_TO_PRINT_LABEL_ERROR);
+			await assertRejects(
+				() => printService.printLabel(printer, ""),
+				Error,
+				FAILED_TO_PRINT_LABEL_ERROR,
+			);
 
 			await server.shutdown();
 
-			server = await startHttpServer(DymoPrintService.HOST, DymoPrintService.START_PORT, () => {
-				return new Response("false", {
-					headers: { "Content-Type": "application/json" },
-				});
-			});
+			server = await startHttpServer(
+				DymoPrintService.HOST,
+				DymoPrintService.START_PORT,
+				() => {
+					return new Response("false", {
+						headers: { "Content-Type": "application/json" },
+					});
+				},
+			);
 
-			await assertRejects(() => printService.printLabel(printer, ""), Error, FAILED_TO_PRINT_LABEL_ERROR);
+			await assertRejects(
+				() => printService.printLabel(printer, ""),
+				Error,
+				FAILED_TO_PRINT_LABEL_ERROR,
+			);
 		} finally {
 			await tearDownTest(server);
 		}
@@ -235,7 +276,8 @@ Deno.test({
 });
 
 Deno.test({
-	name: "printLabel - should print the label if the printer is connected and the web service is running",
+	name:
+		"printLabel - should print the label if the printer is connected and the web service is running",
 	sanitizeResources: false,
 	sanitizeOps: false,
 	fn: async () => {
@@ -267,7 +309,11 @@ Deno.test({
 		try {
 			const printService = await getPrintService(true);
 
-			await assertRejects(() => printService.renderLabel(""), Error, FAILED_TO_RENDER_LABEL_ERROR);
+			await assertRejects(
+				() => printService.renderLabel(""),
+				Error,
+				FAILED_TO_RENDER_LABEL_ERROR,
+			);
 		} finally {
 			await tearDownTest();
 		}

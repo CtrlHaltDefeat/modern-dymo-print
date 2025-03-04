@@ -1,7 +1,9 @@
 const EXPIRATION_DATE_STRING = "Thu, 01 Jan 1970 00:00:00 UTC";
 
 const checkAreCookiesAvailable = (): void => {
-	if (typeof navigator.cookieEnabled === "boolean" && navigator.cookieEnabled) return;
+	if (typeof navigator.cookieEnabled === "boolean" && navigator.cookieEnabled) {
+		return;
+	}
 
 	const testCookieKey = "testCookie";
 	const testCookieValue = "test";

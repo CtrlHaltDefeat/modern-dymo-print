@@ -1,4 +1,7 @@
-import { LOCAL_STORAGE_KEY, NEITHER_LOCAL_STORAGE_AND_COOKIES_AVAILABLE_ERROR } from "@/cache/constants.ts";
+import {
+	LOCAL_STORAGE_KEY,
+	NEITHER_LOCAL_STORAGE_AND_COOKIES_AVAILABLE_ERROR,
+} from "@/cache/constants.ts";
 import { getCookie } from "@/cache/cookies.ts";
 import { getFromLocalStorage } from "@/cache/localStorage.ts";
 import type { WebServiceSettings } from "@/cache/types.ts";
@@ -11,7 +14,8 @@ export function getCachedService(): WebServiceSettings {
 	let cookiesUnavailable = false;
 
 	try {
-		({ serviceHost, servicePort } = getFromLocalStorage<WebServiceSettings>(LOCAL_STORAGE_KEY) ?? {});
+		({ serviceHost, servicePort } =
+			getFromLocalStorage<WebServiceSettings>(LOCAL_STORAGE_KEY) ?? {});
 
 		if (serviceHost && servicePort) {
 			return {
@@ -21,7 +25,10 @@ export function getCachedService(): WebServiceSettings {
 		}
 	} catch (error) {
 		localStorageUnavailable = true;
-		logMessage("LocalStorage not available", error instanceof Error ? error : undefined);
+		logMessage(
+			"LocalStorage not available",
+			error instanceof Error ? error : undefined,
+		);
 	}
 
 	let cookie: string = "{}";
@@ -35,10 +42,15 @@ export function getCachedService(): WebServiceSettings {
 		};
 	} catch (error) {
 		cookiesUnavailable = true;
-		logMessage("Cookies not available", error instanceof Error ? error : undefined);
+		logMessage(
+			"Cookies not available",
+			error instanceof Error ? error : undefined,
+		);
 	}
 
-	if (localStorageUnavailable && cookiesUnavailable) throw new Error(NEITHER_LOCAL_STORAGE_AND_COOKIES_AVAILABLE_ERROR);
+	if (localStorageUnavailable && cookiesUnavailable) {
+		throw new Error(NEITHER_LOCAL_STORAGE_AND_COOKIES_AVAILABLE_ERROR);
+	}
 
 	return {
 		serviceHost,

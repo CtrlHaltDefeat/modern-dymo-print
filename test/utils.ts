@@ -4,7 +4,11 @@ import { testPrintersXml } from "./testData.ts";
 
 const servers = new Map<string, Promise<void>>();
 
-export const startHttpServer = async (hostname: string, port: number, handler?: Deno.ServeHandler): Promise<Deno.HttpServer> => {
+export const startHttpServer = async (
+	hostname: string,
+	port: number,
+	handler?: Deno.ServeHandler,
+): Promise<Deno.HttpServer> => {
 	const serverName = `${hostname}:${port}`;
 	await servers.get(serverName);
 
@@ -14,7 +18,7 @@ export const startHttpServer = async (hostname: string, port: number, handler?: 
 		serverName,
 		new Promise((resolve) => {
 			jobResolver = resolve;
-		})
+		}),
 	);
 
 	// @ts-ignore: Only for testing purposes
@@ -22,7 +26,12 @@ export const startHttpServer = async (hostname: string, port: number, handler?: 
 
 	const controller = new AbortController();
 
-	const server = Deno.serve({ hostname, port, signal: controller.signal, onListen: () => undefined }, async (req, info) => {
+	const server = Deno.serve({
+		hostname,
+		port,
+		signal: controller.signal,
+		onListen: () => undefined,
+	}, async (req, info) => {
 		const headers = new Headers({
 			"Access-Control-Allow-Origin": "*",
 			"Content-Type": "text/plain",
@@ -45,7 +54,10 @@ export const startHttpServer = async (hostname: string, port: number, handler?: 
 };
 
 export const getLabelWriter = (connected: boolean): LabelWriter => {
-	const printersXml = new DOMParser().parseFromString(testPrintersXml, "text/xml");
+	const printersXml = new DOMParser().parseFromString(
+		testPrintersXml,
+		"text/xml",
+	);
 	const printerElement = printersXml.children[0];
 	const printer = new LabelWriter(printerElement.children[0]);
 

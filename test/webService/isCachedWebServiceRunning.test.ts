@@ -18,9 +18,13 @@ Deno.test({
 	sanitizeResources: false,
 	fn: async () => {
 		setCachedService(DymoPrintService.HOST, DymoPrintService.START_PORT);
-		const server = await startHttpServer(DymoPrintService.HOST, DymoPrintService.START_PORT, () => {
-			return new Response("OK", { status: 200 });
-		});
+		const server = await startHttpServer(
+			DymoPrintService.HOST,
+			DymoPrintService.START_PORT,
+			() => {
+				return new Response("OK", { status: 200 });
+			},
+		);
 
 		assertEquals(await isCachedWebServiceRunning(), true);
 

@@ -6,7 +6,11 @@ export enum LogLevel {
 	ERROR,
 }
 
-export default function logMessage(title: string, error?: Error | string, logLevel: LogLevel = LogLevel.INFO): void {
+export default function logMessage(
+	title: string,
+	error?: Error | string,
+	logLevel: LogLevel = LogLevel.INFO,
+): void {
 	if (!isLoggingEnabled) return;
 
 	let errorMessage = `DymoPrint\n${title}`;

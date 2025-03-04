@@ -18,7 +18,8 @@ export default class DymoLabel {
 	}
 
 	public get isDLSLabel(): boolean {
-		return !!this.DOCUMENT.querySelectorAll("Label") || !!this.DOCUMENT.querySelectorAll("DieCutLabel");
+		return !!this.DOCUMENT.querySelectorAll("Label") ||
+			!!this.DOCUMENT.querySelectorAll("DieCutLabel");
 	}
 
 	public static fromString(labelXml: string): DymoLabel {
@@ -28,7 +29,10 @@ export default class DymoLabel {
 
 	public toString(): string {
 		let labelString = new XMLSerializer().serializeToString(this.DOCUMENT);
-		labelString = labelString.replaceAll(/<Color (.+)\/>/g, "<Color $1> </Color>");
+		labelString = labelString.replaceAll(
+			/<Color (.+)\/>/g,
+			"<Color $1> </Color>",
+		);
 		return new XMLSerializer().serializeToString(this.DOCUMENT);
 	}
 }
