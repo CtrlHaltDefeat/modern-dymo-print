@@ -42,25 +42,29 @@ Deno.test({
 				await t.step(
 					`should find service on host ${serviceHost} port ${servicePort}`,
 					async () => {
-						const server = await startHttpServer(
-							serviceHost,
-							servicePort,
-							(request, _info) => {
-								if (!request.url.includes(serviceHost)) {
-									return new Response("Not found", { status: 404 });
-								}
+						let server;
 
-								return new Response("OK", { status: 200 });
-							},
-						);
+						try {
+							server = await startHttpServer(
+								serviceHost,
+								servicePort,
+								(request, _info) => {
+									if (!request.url.includes(serviceHost)) {
+										return new Response("Not found", { status: 404 });
+									}
 
-						const expected = { serviceHost, servicePort };
-						localStorage.clear();
-						assertEquals(await findAllWebServices(), expected);
-						assertEquals(await findWebService(), expected);
-						assertEquals(getCachedService(), expected);
+									return new Response("OK", { status: 200 });
+								},
+							);
 
-						await server.shutdown();
+							const expected = { serviceHost, servicePort };
+							localStorage.clear();
+							assertEquals(await findAllWebServices(), expected);
+							assertEquals(await findWebService(), expected);
+							assertEquals(getCachedService(), expected);
+						} finally {
+							await server?.shutdown();
+						}
 					},
 				);
 			}
