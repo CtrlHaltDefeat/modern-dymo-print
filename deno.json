@@ -29,5 +29,8 @@
 	"fmt": {
 		"useTabs": true,
 		"exclude": ["dymo.connect.framework.js"]
+	},
+	"lint": {
+		"exclude": ["dymo.connect.framework.js"]
 	}
 }
