@@ -1,0 +1,26 @@
+{
+	"name": "@ctrlhaltdefeat/dymo-print",
+	"version": "1.0.0",
+	"exports": "./src/index.ts",
+	"publish": {
+		"include": [
+			"./src/**/*.ts",
+			"./deno.json",
+			"./README",
+			"./LICENSE"
+		]
+	},
+	"tasks": {
+		"dev": "deno run --allow-all serve.ts"
+	},
+	"imports": {
+		"@/": "./src/",
+		"esbuild_serve": "https://deno.land/x/esbuild_serve@1.5.0/mod.ts",
+		"happy-dom": "npm:@happy-dom/global-registrator"
+	},
+	"compilerOptions": {
+		"lib": [
+			"dom", "dom.iterable", "esnext", "deno.ns"
+		]
+	}
+}
