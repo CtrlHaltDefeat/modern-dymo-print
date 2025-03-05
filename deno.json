@@ -11,7 +11,7 @@
 		]
 	},
 	"tasks": {
-		"dev": "deno run --allow-all serve.ts"
+		"dev": "deno run --allow-all ./debug/serve.ts"
 	},
 	"imports": {
 		"@/": "./src/"
