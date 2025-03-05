@@ -1,5 +1,5 @@
 import { DymoPrintService } from "@/index.ts";
-import { testLabel } from "./test/testData.ts";
+import { testLabel } from "../test/testData.ts";
 
 const printService = await DymoPrintService.initDymoPrintService(true);
 
