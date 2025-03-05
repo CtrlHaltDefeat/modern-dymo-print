@@ -1,5 +1,5 @@
 {
-	"name": "@ctrlhaltdefeat/dymo-print",
+	"name": "@ctrlhaltdefeat/modern-dymo-print",
 	"version": "1.0.0",
 	"exports": "./src/index.ts",
 	"publish": {
