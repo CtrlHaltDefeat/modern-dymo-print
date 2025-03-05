@@ -6,7 +6,7 @@
 		"include": [
 			"./src/**/*.ts",
 			"./deno.json",
-			"./README",
+			"./README.md",
 			"./LICENSE"
 		]
 	},
