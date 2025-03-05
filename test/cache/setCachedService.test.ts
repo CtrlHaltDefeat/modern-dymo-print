@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from "@/cache/constants.ts";
 import { setCachedService } from "@/cache/setCachedService.ts";
-import { GlobalRegistrator } from "happy-dom";
 import { assertEquals, assertThrows } from "jsr:@std/assert";
+import { GlobalRegistrator } from "npm:@happy-dom/global-registrator";
 import { serviceSettings, unsetLocalStorage } from "./utils.ts";
 
 // Helper to clear storage before each test

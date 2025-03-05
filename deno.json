@@ -14,9 +14,7 @@
 		"dev": "deno run --allow-all serve.ts"
 	},
 	"imports": {
-		"@/": "./src/",
-		"esbuild_serve": "https://deno.land/x/esbuild_serve@1.5.0/mod.ts",
-		"happy-dom": "npm:@happy-dom/global-registrator"
+		"@/": "./src/"
 	},
 	"compilerOptions": {
 		"lib": [

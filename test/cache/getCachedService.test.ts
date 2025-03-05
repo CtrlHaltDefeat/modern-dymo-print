@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from "@/cache/constants.ts";
 import { getCachedService } from "@/cache/getCachedService.ts";
-import { GlobalRegistrator } from "happy-dom";
 import { assertEquals } from "jsr:@std/assert";
+import { GlobalRegistrator } from "npm:@happy-dom/global-registrator";
 import { serviceSettings, unsetLocalStorage } from "./utils.ts";
 
 function clearStorage() {
@@ -24,6 +24,7 @@ Deno.test("getCachedService - returns service from localStorage when available",
 
 Deno.test("getCachedService - returns service from cookies when localStorage unavailable", async () => {
 	clearStorage();
+
 	GlobalRegistrator.register();
 
 	const originalLocalStorage = unsetLocalStorage();
