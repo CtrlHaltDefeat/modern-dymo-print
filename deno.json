@@ -1,0 +1,34 @@
+{
+	"name": "@ctrlhaltdefeat/dymo-print",
+	"version": "1.0.0",
+	"exports": "./src/index.ts",
+	"publish": {
+		"include": [
+			"./src/**/*.ts",
+			"./deno.json",
+			"./README",
+			"./LICENSE"
+		]
+	},
+	"tasks": {
+		"dev": "deno run --allow-all ./debug/serve.ts"
+	},
+	"imports": {
+		"@/": "./src/"
+	},
+	"compilerOptions": {
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext",
+			"deno.ns"
+		]
+	},
+	"fmt": {
+		"useTabs": true,
+		"exclude": ["dymo.connect.framework.js"]
+	},
+	"lint": {
+		"exclude": ["dymo.connect.framework.js"]
+	}
+}
