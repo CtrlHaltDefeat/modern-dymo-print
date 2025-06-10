@@ -17,16 +17,16 @@ heavy.
 
 ```bash
 # Deno
-deno add @ctrlhaltdefeat/dymo-print
+deno add jsr:@ctrlhaltdefeat/modern-dymo-print
 
 # Node.js with npm
-npx jsr add @ctrlhaltdefeat/dymo-print
+npx jsr add @ctrlhaltdefeat/modern-dymo-print
 
 # Node.js with yarn
-yarn dlx jsr add @ctrlhaltdefeat/dymo-print
+yarn add jsr:@ctrlhaltdefeat/modern-dymo-print
 
 # Node.js with pnpm
-pnpm dlx jsr add @ctrlhaltdefeat/dymo-print
+pnpm i jsr:@ctrlhaltdefeat/modern-dymo-print
 ```
 
 ## Features
