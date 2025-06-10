@@ -60,7 +60,7 @@ const printers: DymoPrinter[] = await printService.getPrinters();
 
 // Print to the first available printer
 if (printers.length > 0) {
-	await printService.print(printers[0], "YOUR LABEL HERE");
+	await printService.printLabel(printers[0], "YOUR LABEL HERE");
 }
 ```
 
