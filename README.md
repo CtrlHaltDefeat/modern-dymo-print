@@ -75,7 +75,7 @@ const printService = await DymoPrintService.initDymoPrintService();
 // Get all available DYMO printers
 const printers: DymoPrinter[] = await printService.getPrinters();
 
-printers.foreach((printer) => {
+printers.forEach((printer) => {
 	console.log(printer.isLocal);
 	console.log(printer.isConnected);
 	console.log(printer.modelName);
