@@ -1,8 +1,8 @@
 import DymoPrinter from "@/printers/DymoPrinter.ts";
 
 export default class TapePrinter extends DymoPrinter {
-	public printerType = "TapePrinter";
-	public isAutoCutSupported: boolean;
+	public override readonly printerType = "TapePrinter";
+	public readonly isAutoCutSupported: boolean;
 
 	constructor(element: Element) {
 		super(element);

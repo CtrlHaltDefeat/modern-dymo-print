@@ -1,8 +1,8 @@
 import DymoPrinter from "@/printers/DymoPrinter.ts";
 
 export default class DZPrinter extends DymoPrinter {
-	public printerType = "DZPrinter";
-	public isAutoCutSupported: boolean;
+	public override readonly printerType = "DZPrinter";
+	public readonly isAutoCutSupported: boolean;
 
 	constructor(element: Element) {
 		super(element);
