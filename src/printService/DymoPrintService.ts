@@ -18,10 +18,6 @@ import invokeCommand, { HttpMethod } from "@/webService/invokeCommand.ts";
 import isCachedWebServiceRunning from "@/webService/isCachedWebServiceRunning.ts";
 
 export default class DymoPrintService {
-	private static readonly LABEL_WRITER_TAG = "LabelWriterPrinter";
-	private static readonly TAPE_PRINTER_TAG = "TapePrinter";
-	private static readonly DZ_PRINTER_TAG = "DZPrinter";
-
 	public static readonly PROTOCOL = "https://";
 	public static readonly SERVICE_PATH = "DYMO/DLS/Printing";
 	public static readonly START_PORT = 41951;
@@ -94,13 +90,13 @@ export default class DymoPrintService {
 		const printers: DymoPrinter[] = [];
 		[...printerElement.children].forEach((element) => {
 			switch (element.tagName) {
-				case DymoPrintService.LABEL_WRITER_TAG:
+				case LabelWriter.PRINTER_XML_TAG:
 					printers.push(new LabelWriter(element));
 					break;
-				case DymoPrintService.TAPE_PRINTER_TAG:
+				case TapePrinter.PRINTER_XML_TAG:
 					printers.push(new TapePrinter(element));
 					break;
-				case DymoPrintService.DZ_PRINTER_TAG:
+				case DZPrinter.PRINTER_XML_TAG:
 					printers.push(new DZPrinter(element));
 			}
 		});

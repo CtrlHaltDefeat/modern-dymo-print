@@ -1,4 +1,6 @@
 export default abstract class DymoPrinter {
+	public static readonly PRINTER_XML_TAG: string;
+
 	public abstract readonly printerType: string;
 
 	public readonly isConnected: boolean;

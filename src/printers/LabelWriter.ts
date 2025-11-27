@@ -1,6 +1,8 @@
 import DymoPrinter from "@/printers/DymoPrinter.ts";
 
 export default class LabelWriter extends DymoPrinter {
+	public static override readonly PRINTER_XML_TAG = "LabelWriterPrinter";
+
 	public override readonly printerType = "LabelWriter";
 	public readonly isTwinTurbo: boolean;
 
