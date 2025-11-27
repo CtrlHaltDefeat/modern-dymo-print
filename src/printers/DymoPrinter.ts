@@ -1,11 +1,10 @@
 export default abstract class DymoPrinter {
-	public abstract printerType: string;
+	public abstract readonly printerType: string;
 
 	public readonly isConnected: boolean;
-
-	public name: string;
-	public modelName?: string;
-	public isLocal: boolean;
+	public readonly name: string;
+	public readonly modelName?: string;
+	public readonly isLocal: boolean;
 
 	constructor(element: Element) {
 		const name = element.querySelector("Name");
