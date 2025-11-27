@@ -18,6 +18,10 @@ import invokeCommand, { HttpMethod } from "@/webService/invokeCommand.ts";
 import isCachedWebServiceRunning from "@/webService/isCachedWebServiceRunning.ts";
 
 export default class DymoPrintService {
+	private static readonly LABEL_WRITER_TAG = "LabelWriterPrinter";
+	private static readonly TAPE_PRINTER_TAG = "TapePrinter";
+	private static readonly DZ_PRINTER_TAG = "DZPrinter";
+
 	public static readonly PROTOCOL = "https://";
 	public static readonly SERVICE_PATH = "DYMO/DLS/Printing";
 	public static readonly START_PORT = 41951;
@@ -36,10 +40,6 @@ export default class DymoPrintService {
 		IS_550_PRINTER: "Is550Printer",
 		GET_CONSUMABLE_INFO_IN_550_PRINTER: "GetConsumableInfoIn550Printer",
 	};
-
-	private readonly LABEL_WRITER_TAG = "LabelWriterPrinter";
-	private readonly TAPE_PRINTER_TAG = "TapePrinter";
-	private readonly DZ_PRINTER_TAG = "DZPrinter";
 
 	private webServiceHost: string;
 	private webServicePort: number;
@@ -94,13 +94,13 @@ export default class DymoPrintService {
 		const printers: DymoPrinter[] = [];
 		[...printerElement.children].forEach((element) => {
 			switch (element.tagName) {
-				case this.LABEL_WRITER_TAG:
+				case DymoPrintService.LABEL_WRITER_TAG:
 					printers.push(new LabelWriter(element));
 					break;
-				case this.TAPE_PRINTER_TAG:
+				case DymoPrintService.TAPE_PRINTER_TAG:
 					printers.push(new TapePrinter(element));
 					break;
-				case this.DZ_PRINTER_TAG:
+				case DymoPrintService.DZ_PRINTER_TAG:
 					printers.push(new DZPrinter(element));
 			}
 		});
