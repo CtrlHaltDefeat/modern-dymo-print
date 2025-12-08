@@ -1,6 +1,6 @@
 import { setLoggingState } from "@/logging/enableLogging.ts";
 import logMessage, { LogLevel } from "@/logging/logMessage.ts";
-import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
+import { assertSpyCalls, spy } from "@std/testing/mock";
 
 function setupSpies() {
 	const consoleSpy = {

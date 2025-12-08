@@ -1,6 +1,6 @@
 import { LOCAL_STORAGE_NOT_AVAILABLE_ERROR } from "@/cache/constants.ts";
 import { getFromLocalStorage, setLocalStorage } from "@/cache/localStorage.ts";
-import { assertEquals, assertThrows } from "jsr:@std/assert";
+import { assertEquals, assertThrows } from "@std/assert";
 import { unsetLocalStorage } from "./utils.ts";
 
 function clearStorage() {

@@ -6,7 +6,7 @@ import {
 	findAllWebServices,
 	findWebService,
 } from "@/webService/findWebService.ts";
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { assertEquals, assertRejects } from "@std/assert";
 import { startHttpServer } from "../utils.ts";
 
 Deno.test("findWebService - no service running", async () => {

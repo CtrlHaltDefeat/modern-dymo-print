@@ -1,6 +1,6 @@
 import { DymoPrintService } from "@/index.ts";
 import { pingEndpoint } from "@/webService/pingEndpoint.ts";
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { assertEquals, assertRejects } from "@std/assert";
 import { startHttpServer } from "../utils.ts";
 
 Deno.test({

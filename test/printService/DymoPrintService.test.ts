@@ -16,8 +16,8 @@ import {
 	assertInstanceOf,
 	assertRejects,
 	assertThrows,
-} from "jsr:@std/assert";
-import { Window } from "npm:happy-dom";
+} from "@std/assert";
+import { Window } from "happy-dom";
 import { testLabel, testLabelBase64, testPrintersXml } from "../testData.ts";
 import { getLabelWriter, startHttpServer } from "../utils.ts";
 import { getPrintService } from "./utils.ts";

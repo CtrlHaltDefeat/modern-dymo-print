@@ -1,7 +1,7 @@
 import { setCachedService } from "@/cache/setCachedService.ts";
 import { DymoPrintService } from "@/index.ts";
 import isCachedWebServiceRunning from "@/webService/isCachedWebServiceRunning.ts";
-import { assertEquals } from "jsr:@std/assert";
+import { assertEquals } from "@std/assert";
 import { startHttpServer } from "../utils.ts";
 
 Deno.test("should return false if no service is saved", async () => {

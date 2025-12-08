@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from "@/cache/constants.ts";
 import { getCachedService } from "@/cache/getCachedService.ts";
-import { assertEquals } from "jsr:@std/assert";
-import { GlobalRegistrator } from "npm:@happy-dom/global-registrator";
+import { assertEquals } from "@std/assert";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import { serviceSettings, unsetLocalStorage } from "./utils.ts";
 
 function clearStorage() {

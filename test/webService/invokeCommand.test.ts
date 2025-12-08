@@ -4,7 +4,7 @@ import {
 	MISSING_CONTENT_TYPE_ERROR,
 } from "@/webService/constants.ts";
 import invokeCommand from "@/webService/invokeCommand.ts";
-import { assertEquals, assertRejects } from "jsr:@std/assert";
+import { assertEquals, assertRejects } from "@std/assert";
 import { startHttpServer } from "../utils.ts";
 
 Deno.test("throws an error if the response is not ok", async () => {

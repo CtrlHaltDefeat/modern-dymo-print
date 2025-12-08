@@ -1,6 +1,6 @@
 import { getCookie, removeCookie, setCookie } from "@/cache/cookies.ts";
-import { assertEquals, assertThrows } from "jsr:@std/assert";
-import { GlobalRegistrator } from "npm:@happy-dom/global-registrator";
+import { assertEquals, assertThrows } from "@std/assert";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
 
 Deno.test("cookies - store and retrieve value", async () => {
 	GlobalRegistrator.register();
