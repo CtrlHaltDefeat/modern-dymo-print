@@ -2,7 +2,7 @@ import { assertEquals, assertThrows } from "@std/assert";
 import renderParamsXml from "@/parameter/renderParamsXml.ts";
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import type { XmlElementInput } from "@/parameter/types.ts";
-import appendElement from "./appendElement.ts";
+import appendElement from "./legacy/appendElement.ts";
 
 GlobalRegistrator.register();
 
