@@ -1,6 +1,7 @@
 import DymoPrinter from "@/printers/DymoPrinter.ts";
 
 export default class TapePrinter extends DymoPrinter {
+	public static override readonly PRINTER_PARAM_XML_TAG = "TapePrintParams";
 	public static override readonly PRINTER_XML_TAG = "TapePrinter";
 
 	public override readonly printerType = "TapePrinter";

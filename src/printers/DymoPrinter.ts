@@ -1,4 +1,5 @@
 export default abstract class DymoPrinter {
+	public static readonly PRINTER_PARAM_XML_TAG: string;
 	public static readonly PRINTER_XML_TAG: string;
 
 	public abstract readonly printerType: string;
