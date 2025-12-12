@@ -1,22 +1,7 @@
 import { assertEquals, assertThrows } from "@std/assert";
 import renderParamsXml from "@/parameter/renderParamsXml.ts";
 import type { XmlElementInput } from "@/parameter/types.ts";
-import MockDOMParser from "./utils/MockDOMParser.ts";
-import XMLSerializer from "./utils/MockXMLSerializer.ts";
-
-function installXmlDomMocks() {
-	const originalDOMParser = globalThis.DOMParser;
-	const originalXMLSerializer = globalThis.XMLSerializer;
-
-	globalThis.DOMParser = MockDOMParser as unknown as typeof originalDOMParser;
-	globalThis.XMLSerializer =
-		XMLSerializer as unknown as typeof originalXMLSerializer;
-
-	return () => {
-		globalThis.DOMParser = originalDOMParser;
-		globalThis.XMLSerializer = originalXMLSerializer;
-	};
-}
+import installXmlDomMocks from "./utils/installXmlDomMocks.ts";
 
 Deno.test("renderParamsXml - throws on empty root element", () => {
 	assertThrows(() => renderParamsXml("", []), "Element tag cannot be empty");
