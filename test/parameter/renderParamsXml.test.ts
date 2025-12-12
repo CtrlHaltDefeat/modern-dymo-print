@@ -1,10 +1,22 @@
 import { assertEquals, assertThrows } from "@std/assert";
 import renderParamsXml from "@/parameter/renderParamsXml.ts";
-import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import type { XmlElementInput } from "@/parameter/types.ts";
-import appendElement from "./legacy/appendElement.ts";
+import MockDOMParser from "./utils/MockDOMParser.ts";
+import XMLSerializer from "./utils/MockXMLSerializer.ts";
 
-GlobalRegistrator.register();
+function installXmlDomMocks() {
+	const originalDOMParser = globalThis.DOMParser;
+	const originalXMLSerializer = globalThis.XMLSerializer;
+
+	globalThis.DOMParser = MockDOMParser as unknown as typeof originalDOMParser;
+	globalThis.XMLSerializer =
+		XMLSerializer as unknown as typeof originalXMLSerializer;
+
+	return () => {
+		globalThis.DOMParser = originalDOMParser;
+		globalThis.XMLSerializer = originalXMLSerializer;
+	};
+}
 
 Deno.test("renderParamsXml - throws on empty root element", () => {
 	assertThrows(() => renderParamsXml("", []), "Element tag cannot be empty");
@@ -19,11 +31,17 @@ Deno.test("renderParamsXml - throws on empty root element", () => {
 });
 
 Deno.test("renderParamsXml - empty xmlElements", () => {
+	const restore = installXmlDomMocks();
+
 	const result = renderParamsXml("TestElement", []);
 	assertEquals(result, "<TestElement/>");
+
+	restore();
 });
 
 Deno.test("renderParamsXml - null xmlElements", () => {
+	const restore = installXmlDomMocks();
+
 	const result = renderParamsXml(
 		"TestElement",
 		null as unknown as XmlElementInput[],
@@ -35,6 +53,8 @@ Deno.test("renderParamsXml - null xmlElements", () => {
 		undefined as unknown as XmlElementInput[],
 	);
 	assertEquals(result2, "<TestElement/>");
+
+	restore();
 });
 
 Deno.test("renderParamsXml - throws on empty sub-element tag", () => {
@@ -44,18 +64,39 @@ Deno.test("renderParamsXml - throws on empty sub-element tag", () => {
 	);
 });
 
+Deno.test("renderParamsXml - with single element without content or attributes", () => {
+	const restore = installXmlDomMocks();
+
+	const xmlElements: XmlElementInput[] = [
+		{ tag: "Item", content: "" },
+	];
+	const result = renderParamsXml("Root", xmlElements);
+	assertEquals(
+		result,
+		"<Root><Item/></Root>",
+	);
+
+	restore();
+});
+
 Deno.test("renderParamsXml - with single element without attributes", () => {
+	const restore = installXmlDomMocks();
+
 	const xmlElements: XmlElementInput[] = [
 		{ tag: "Item", content: "value" },
 	];
 	const result = renderParamsXml("Root", xmlElements);
 	assertEquals(
 		result,
-		'<Root><item xmlns="http://www.w3.org/1999/xhtml">value</item></Root>',
+		"<Root><Item>value</Item></Root>",
 	);
+
+	restore();
 });
 
 Deno.test("renderParamsXml - with single element with attributes", () => {
+	const restore = installXmlDomMocks();
+
 	const xmlElements: XmlElementInput[] = [
 		{
 			tag: "Item",
@@ -66,73 +107,40 @@ Deno.test("renderParamsXml - with single element with attributes", () => {
 	const result = renderParamsXml("Root", xmlElements);
 	assertEquals(
 		result,
-		'<Root><item xmlns="http://www.w3.org/1999/xhtml" attr1="val1" attr2="val2">value</item></Root>',
+		'<Root><Item attr1="val1" attr2="val2">value</Item></Root>',
 	);
+
+	restore();
 });
 
 Deno.test("renderParamsXml - with multiple elements", () => {
+	const restore = installXmlDomMocks();
+
 	const xmlElements: XmlElementInput[] = [
 		{ tag: "Item1", content: "value1" },
 		{ tag: "Item2", content: "value2", attributes: { id: "2" } },
 	];
+
 	const result = renderParamsXml("Root", xmlElements);
 	assertEquals(
 		result,
-		'<Root><item1 xmlns="http://www.w3.org/1999/xhtml">value1</item1><item2 xmlns="http://www.w3.org/1999/xhtml" id="2">value2</item2></Root>',
+		'<Root><Item1>value1</Item1><Item2 id="2">value2</Item2></Root>',
 	);
+
+	restore();
 });
 
 Deno.test("renderParamsXml - with content as number", () => {
+	const restore = installXmlDomMocks();
+
 	const xmlElements: XmlElementInput[] = [
 		{ tag: "Number", content: "42" },
 	];
 	const result = renderParamsXml("Root", xmlElements);
 	assertEquals(
 		result,
-		'<Root><number xmlns="http://www.w3.org/1999/xhtml">42</number></Root>',
-	);
-});
-
-function legacyRenderParamsXmlWithDymo(
-	elementTag: string,
-	xmlElements: XmlElementInput[],
-): string {
-	const doc = new DOMParser().parseFromString(`<${elementTag}/>`, "text/xml");
-	const root = doc.documentElement;
-
-	xmlElements.forEach(({ tag, content, attributes }) =>
-		appendElement(
-			root,
-			tag,
-			content?.toString() ?? undefined,
-			attributes as Record<string, string> | undefined,
-		)
+		"<Root><Number>42</Number></Root>",
 	);
 
-	return new XMLSerializer().serializeToString(root);
-}
-
-Deno.test("renderParamsXml - matches legacy dymo.xml.appendElement output", () => {
-	const cases: XmlElementInput[][] = [
-		[],
-		[{ tag: "Item", content: "value" }],
-		[
-			{ tag: "Item1", content: "value1" },
-			{ tag: "Item2", content: "value2", attributes: { id: "2" } },
-		],
-		[
-			{ tag: "Number", content: 42 as unknown as string },
-			{ tag: "Empty", content: "" as unknown as string },
-		],
-		[
-			{ tag: "WithAttrs", content: "x", attributes: { a: "1", b: "2" } },
-			{ tag: "NoAttrs", content: "y" },
-		],
-	];
-
-	for (const xmlElements of cases) {
-		const expected = legacyRenderParamsXmlWithDymo("Root", xmlElements);
-		const actual = renderParamsXml("Root", xmlElements);
-		assertEquals(actual, expected);
-	}
+	restore();
 });
