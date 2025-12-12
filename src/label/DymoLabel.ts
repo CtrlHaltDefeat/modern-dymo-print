@@ -28,11 +28,6 @@ export default class DymoLabel {
 	}
 
 	public toString(): string {
-		let labelString = new XMLSerializer().serializeToString(this.DOCUMENT);
-		labelString = labelString.replaceAll(
-			/<Color (.+)\/>/g,
-			"<Color $1> </Color>",
-		);
-		return new XMLSerializer().serializeToString(this.DOCUMENT);
+		return serializeXml(this.DOCUMENT);
 	}
 }
