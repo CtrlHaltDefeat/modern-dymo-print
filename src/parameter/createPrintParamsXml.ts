@@ -9,18 +9,42 @@ import type {
 import { PrinterType } from "@/parameter/enums.ts";
 import renderParamsXml from "@/parameter/renderParamsXml.ts";
 
+/**
+ * Creates a printer-parameter XML string for LabelWriter printers.
+ *
+ * @param type The LabelWriter printer type.
+ * @param options LabelWriter-specific print parameter options. {@link LabelWriterPrintParameterOptions} for details.
+ * @returns An XML string representing printer parameters.
+ */
 function createPrintParamsXml(
 	type: PrinterType.LabelWriter,
 	options: LabelWriterPrintParameterOptions,
 ): string;
+
+/**
+ * Creates a printer-parameter XML string for Tape printers.
+ *
+ * @param type The Tape printer type.
+ * @param options Tape printer–specific print parameter options. {@link TapePrinterPrintParameterOptions} for details.
+ * @returns An XML string representing printer parameters.
+ */
 function createPrintParamsXml(
 	type: PrinterType.TapePrinter,
 	options: TapePrinterPrintParameterOptions,
 ): string;
+
+/**
+ * Creates a printer-parameter XML string for DZ printers.
+ *
+ * @param type The DZ printer type.
+ * @param options DZ printer–specific print parameter options. {@link DZPrinterPrintParameterOptions} for details.
+ * @returns An XML string representing printer parameters.
+ */
 function createPrintParamsXml(
 	type: PrinterType.DZPrinter,
 	options: DZPrinterPrintParameterOptions,
 ): string;
+
 function createPrintParamsXml(
 	type: PrinterType,
 	options: Record<string, string | number>,
