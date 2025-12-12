@@ -50,7 +50,10 @@ a running DYMO WebService with the following parameters:
 | Port      | 41951:41960          |
 
 ```typescript
-import { DymoPrinter, DymoPrintService } from "@ctrlhaltdefeat/modern-dymo-print";
+import {
+	DymoPrinter,
+	DymoPrintService,
+} from "@ctrlhaltdefeat/modern-dymo-print";
 
 // Init the print service
 const printService = await DymoPrintService.initDymoPrintService();
@@ -67,7 +70,10 @@ if (printers.length > 0) {
 ### Managing Printers
 
 ```typescript
-import { DymoPrinter, DymoPrintService } from "@ctrlhaltdefeat/modern-dymo-print";
+import {
+	DymoPrinter,
+	DymoPrintService,
+} from "@ctrlhaltdefeat/modern-dymo-print";
 
 // Init the print service
 const printService = await DymoPrintService.initDymoPrintService();
