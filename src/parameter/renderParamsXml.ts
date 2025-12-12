@@ -18,7 +18,7 @@ export default function renderParamsXml(
 			}
 
 			const el = doc.createElement(key);
-			el.textContent = content.toString();
+			el.textContent = content;
 
 			if (isObject(attributes)) {
 				Object.entries(attributes).forEach(([attrKey, attrValue]) => {
