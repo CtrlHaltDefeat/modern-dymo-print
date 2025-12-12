@@ -1,5 +1,6 @@
 import isObject from "@/parameter/isObject.ts";
 import type { XmlElementInput } from "@/parameter/types.ts";
+import serializeXml from "@/utils/serializeXml.ts";
 
 export default function renderParamsXml(
 	elementTag: string,
@@ -30,5 +31,5 @@ export default function renderParamsXml(
 		});
 	}
 
-	return new XMLSerializer().serializeToString(doc.documentElement);
+	return serializeXml(doc);
 }
