@@ -1,3 +1,5 @@
+import serializeXml from "@/utils/serializeXml.ts";
+
 export default class DymoLabel {
 	private readonly DOCUMENT: XMLDocument;
 
@@ -20,11 +22,6 @@ export default class DymoLabel {
 	public get isDLSLabel(): boolean {
 		return !!this.DOCUMENT.querySelectorAll("Label") ||
 			!!this.DOCUMENT.querySelectorAll("DieCutLabel");
-	}
-
-	public static fromString(labelXml: string): DymoLabel {
-		const document = new DOMParser().parseFromString(labelXml, "text/xml");
-		return new DymoLabel(document);
 	}
 
 	public toString(): string {

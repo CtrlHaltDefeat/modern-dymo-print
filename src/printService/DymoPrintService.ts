@@ -106,7 +106,7 @@ export default class DymoPrintService {
 
 	private getLabelString(label: string | DymoLabel): string {
 		return typeof label === "string"
-			? DymoLabel.fromString(label).toString()
+			? new DymoLabel(label).toString()
 			: label.toString();
 	}
 
