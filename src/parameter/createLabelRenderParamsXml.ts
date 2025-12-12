@@ -14,6 +14,15 @@ function parseColor(color: Color): Record<string, string> {
 	};
 }
 
+/**
+ * Creates an XML string suitable for passing to `printLabel` as the `renderParamsXml` argument.\
+ * Only the options explicitly provided will be included in the resulting XML.
+ *
+ * @param {RenderParameterOptions} options
+ * An object describing label render parameters. {@link RenderParameterOptions} for details on the available options.
+ *
+ * @returns {string} An XML string representing the label render parameters.
+ */
 export default function createLabelRenderParamsXml(
 	options: RenderParameterOptions,
 ): string {
