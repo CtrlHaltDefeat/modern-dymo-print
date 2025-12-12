@@ -4,4 +4,5 @@ export { default as DymoPrintService } from "@/printService/DymoPrintService.ts"
 export {
 	createLabelRenderParamsXml,
 	createPrintParamsXml,
+	PrinterType,
 } from "@/parameter/index.ts";
